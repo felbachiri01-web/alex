@@ -4,95 +4,65 @@
     <meta charset="UTF-8">
     <title>Mis Películas y Series</title>
     <style>
-        /* Reset básico */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             background-color: #f5f5f5;
             color: #333;
-            line-height: 1.6;
         }
-
         header {
-            background-color: #ffffff;
             text-align: center;
             padding: 30px 0;
+            background: white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
-        header h1 {
-            font-size: 2.2em;
-            letter-spacing: 1px;
-            color: #222;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
+        header h1 { font-size: 2em; color: #222; }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
         h2 {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: #444;
-            border-bottom: 2px solid #e0e0e0;
-            padding-bottom: 10px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 8px;
         }
-
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
         }
-
         .card {
-            background: #ffffff;
-            border-radius: 10px;
+            background: white;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
             transition: transform 0.2s, box-shadow 0.2s;
         }
-
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-
         .card img {
             width: 100%;
-            display: block;
-            height: 300px;
+            height: 280px;
             object-fit: cover;
         }
-
         .card-content {
-            padding: 15px;
             text-align: center;
+            padding: 12px;
         }
-
         .card-content h3 {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-size: 1.1em;
             color: #222;
         }
-
-        .stars {
-            color: #f39c12;
-        }
-
+        .stars { color: #f39c12; }
         footer {
             text-align: center;
             padding: 20px 0;
-            background-color: #ffffff;
+            background: white;
             margin-top: 40px;
-            box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
             font-size: 0.9em;
-            color: #666;
+            color: #555;
+            box-shadow: 0 -2px 4px rgba(0,0,0,0.05);
         }
     </style>
 </head>
@@ -106,25 +76,25 @@
     <h2>Películas</h2>
     <div class="card-grid">
         <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/en/1/1c/Godfather_ver1.jpg" alt="El Padrino">
+            <img src="https://cdn.pixabay.com/photo/2017/01/20/00/30/clapperboard-1994465_1280.jpg" alt="El Padrino">
             <div class="card-content">
-                <h3>El Padrino (1972)</h3>
+                <h3>El Padrino</h3>
                 <div class="stars">⭐⭐⭐⭐⭐</div>
             </div>
         </div>
 
         <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/en/b/bc/Interstellar_film_poster.jpg" alt="Interstellar">
+            <img src="https://cdn.pixabay.com/photo/2014/11/30/14/11/moon-551361_1280.jpg" alt="Interstellar">
             <div class="card-content">
-                <h3>Interstellar (2014)</h3>
+                <h3>Interstellar</h3>
                 <div class="stars">⭐⭐⭐⭐</div>
             </div>
         </div>
 
         <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/en/c/c1/The_Matrix_Poster.jpg" alt="Matrix">
+            <img src="https://cdn.pixabay.com/photo/2016/11/23/14/45/movie-theater-1850084_1280.jpg" alt="Matrix">
             <div class="card-content">
-                <h3>Matrix (1999)</h3>
+                <h3>Matrix</h3>
                 <div class="stars">⭐⭐⭐⭐⭐</div>
             </div>
         </div>
@@ -133,7 +103,7 @@
     <h2>Series</h2>
     <div class="card-grid">
         <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/en/7/75/Stranger_Things_season_4.jpg" alt="Stranger Things">
+            <img src="https://cdn.pixabay.com/photo/2017/10/10/21/47/film-2838942_1280.jpg" alt="Stranger Things">
             <div class="card-content">
                 <h3>Stranger Things</h3>
                 <div class="stars">⭐⭐⭐⭐⭐</div>
@@ -141,7 +111,7 @@
         </div>
 
         <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/en/3/3d/Breaking_Bad_title_card.png" alt="Breaking Bad">
+            <img src="https://cdn.pixabay.com/photo/2015/01/08/18/28/box-office-593278_1280.jpg" alt="Breaking Bad">
             <div class="card-content">
                 <h3>Breaking Bad</h3>
                 <div class="stars">⭐⭐⭐⭐⭐</div>
@@ -149,9 +119,9 @@
         </div>
 
         <div class="card">
-            <img src="https://upload.wikimedia.org/wikipedia/en/4/4f/Game_of_Thrones_Season_8.jpg" alt="Game of Thrones">
+            <img src="https://cdn.pixabay.com/photo/2017/01/31/23/46/movies-2027268_1280.jpg" alt="Juego de Tronos">
             <div class="card-content">
-                <h3>Game of Thrones</h3>
+                <h3>Juego de Tronos</h3>
                 <div class="stars">⭐⭐⭐⭐</div>
             </div>
         </div>
@@ -164,4 +134,3 @@
 
 </body>
 </html>
-
