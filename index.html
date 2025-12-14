@@ -1,992 +1,153 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mi blog de películas | Favoritas y vistas</title>
-  <meta name="description" content="Blog personal de películas favoritas y las que ya he visto. Inspirado en Netflix y Prime Video." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0f1115;
-      --bg-soft: #12141a;
-      --bg-overlay: rgba(0, 0, 0, 0.65);
-      --text: #e7e9ee;
-      --text-soft: #aeb4c0;
-      --muted: #7a8292;
-      --card: #161924;
-      --card-soft: #1b1f2e;
-      --border: #23283a;
-      --accent-red: #e50914; /* estilo Netflix */
-      --accent-blue: #00a8e1; /* estilo Prime */
-      --accent: var(--accent-red);
-      --success: #22c55e;
-      --warning: #f59e0b;
-      --shadow: 0 8px 30px rgba(0,0,0,0.35);
-      --radius: 16px;
-      --radius-sm: 10px;
-      --radius-lg: 22px;
-      --transition: 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
-    }
+<meta charset="UTF-8">
+<title>Mis Películas</title>
 
-    /* Tema alternativo (Prime-style) */
-    [data-theme="blue"] {
-      --accent: var(--accent-blue);
-    }
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    html, body {
-      background: var(--bg);
-      color: var(--text);
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #141414;
+    color: white;
+}
 
-    a { color: var(--text); text-decoration: none; }
+header {
+    padding: 20px 40px;
+    background-color: #141414;
+    border-bottom: 2px solid #e50914;
+}
 
-    /* Layout base */
-    .container {
-      width: min(1280px, 92%);
-      margin: 0 auto;
-    }
+header h1 {
+    color: #e50914;
+    font-size: 2em;
+}
 
-    /* Header */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      backdrop-filter: saturate(1.1) blur(12px);
-      background: linear-gradient(to bottom, rgba(15,17,21,0.85), rgba(15,17,21,0.35));
-      border-bottom: 1px solid var(--border);
-    }
-    .nav {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-      gap: 24px;
-      padding: 14px 0;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-    }
-    .brand .logo {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: radial-gradient(110px circle at 30% 30%, var(--accent) 0%, transparent 52%),
-                  linear-gradient(135deg, #2c3346, #0f1115 60%);
-      box-shadow: 0 6px 18px rgba(229, 9, 20, 0.15);
-    }
-    .brand .title {
-      font-family: "Playfair Display", serif;
-      font-size: 1.1rem;
-    }
+.section {
+    padding: 30px 40px;
+}
 
-    .searchbar {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      justify-content: center;
-    }
-    .searchbar input {
-      width: min(560px, 72vw);
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--text);
-      outline: none;
-      transition: border-color var(--transition), box-shadow var(--transition);
-    }
-    .searchbar input::placeholder { color: var(--muted); }
-    .searchbar input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 6px rgba(229, 9, 20, 0.08);
-    }
-    .searchbar .btn {
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--card-soft);
-      color: var(--text);
-      cursor: pointer;
-      transition: transform var(--transition), background var(--transition);
-    }
-    .searchbar .btn:hover { transform: translateY(-1px); background: #20253a; }
+.section h2 {
+    margin-bottom: 20px;
+}
 
-    .actions {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 10px;
-    }
-    .chip {
-      padding: 8px 12px;
-      background: #151828;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      color: var(--text-soft);
-      font-size: 0.9rem;
-    }
-    .toggle {
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: linear-gradient(145deg, #151828, #1a1e2d);
-      color: var(--text);
-      cursor: pointer;
-    }
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
 
-    /* Hero con fondo dinámico */
-    .hero {
-      position: relative;
-      margin-top: 12px;
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      background: #090b10;
-      box-shadow: var(--shadow);
-      min-height: 320px;
-    }
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0.65) 100%),
-        radial-gradient(800px circle at 10% 10%, rgba(229, 9, 20, 0.12), transparent 55%),
-        radial-gradient(900px circle at 90% 90%, rgba(0, 168, 225, 0.12), transparent 50%);
-      pointer-events: none;
-      z-index: 1;
-    }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background-size: cover;
-      background-position: center;
-      filter: saturate(1.05) contrast(0.95) brightness(0.92);
-      animation: heroCycle 32s linear infinite;
-      opacity: 0.9;
-    }
-    @keyframes heroCycle {
-      0%   { background-image: url('https://picsum.photos/seed/cine1/1400/600'); }
-      25%  { background-image: url('https://picsum.photos/seed/cine2/1400/600'); }
-      50%  { background-image: url('https://picsum.photos/seed/cine3/1400/600'); }
-      75%  { background-image: url('https://picsum.photos/seed/cine4/1400/600'); }
-      100% { background-image: url('https://picsum.photos/seed/cine5/1400/600'); }
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      padding: 28px;
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 24px;
-      align-items: end;
-    }
-    .hero h1 {
-      margin: 0;
-      font-family: "Playfair Display", serif;
-      font-weight: 600;
-      font-size: clamp(1.4rem, 2.2vw, 2rem);
-      letter-spacing: 0.2px;
-    }
-    .hero p {
-      margin-top: 8px;
-      color: var(--text-soft);
-      max-width: 60ch;
-    }
-    .hero-cta {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .button-primary, .button-secondary {
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      cursor: pointer;
-      font-weight: 600;
-      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
-    }
-    .button-primary {
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 10px 30px rgba(229, 9, 20, 0.25);
-    }
-    .button-primary:hover { transform: translateY(-1px); box-shadow: 0 14px 38px rgba(229, 9, 20, 0.35); }
-    .button-secondary {
-      background: #141725;
-      color: var(--text);
-    }
-    .button-secondary:hover { background: #1a1f2e; }
+a {
+    text-decoration: none;
+    color: white;
+}
 
-    /* Secciones y carrusel */
-    section {
-      margin: 28px 0;
-    }
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-    .section-header h2 {
-      margin: 0;
-      font-size: 1.2rem;
-      letter-spacing: 0.2px;
-    }
-    .controls {
-      display: flex;
-      gap: 8px;
-    }
-    .control-btn {
-      width: 36px; height: 36px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--card-soft);
-      color: var(--text);
-      display: grid; place-items: center;
-      cursor: pointer;
-      transition: background var(--transition), transform var(--transition);
-    }
-    .control-btn:hover { background: #1f2333; transform: translateY(-1px); }
+/* TARJETAS */
+.card {
+    height: 260px;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
 
-    .carousel {
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: 180px;
-      gap: 12px;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: thin;
-      padding-bottom: 4px;
-    }
-    .carousel::-webkit-scrollbar { height: 8px; }
-    .carousel::-webkit-scrollbar-thumb {
-      background: #20253a; border-radius: 999px;
-    }
+/* Oscurecer imagen */
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.85),
+        rgba(0,0,0,0.2)
+    );
+}
 
-    /* Tarjeta de película */
-    .card {
-      position: relative;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      scroll-snap-align: start;
-      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-    }
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 14px 40px rgba(0,0,0,0.35);
-      border-color: #2a3148;
-    }
-    .poster {
-      position: relative;
-      aspect-ratio: 2/3;
-      width: 100%;
-      overflow: hidden;
-      background: #0b0e16;
-    }
-    .poster img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: saturate(1.05) contrast(0.98);
-      transition: transform 500ms ease;
-    }
-    .card:hover .poster img { transform: scale(1.04); }
-    .poster .rating-badge {
-      position: absolute; top: 10px; left: 10px;
-      padding: 6px 8px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.55);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.85rem;
-      backdrop-filter: blur(4px);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
+.card:hover {
+    transform: scale(1.08);
+}
 
-    .content {
-      padding: 10px;
-      display: grid;
-      gap: 6px;
-    }
-    .title {
-      font-weight: 700;
-      font-size: 0.95rem;
-    }
-    .meta {
-      color: var(--muted);
-      font-size: 0.85rem;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    .tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .tag {
-      padding: 4px 8px;
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      background: #141725;
-      color: var(--text-soft);
-      font-size: 0.8rem;
-    }
-    .actions-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 6px;
-    }
-    .chip-btn {
-      flex: 1;
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: #151828;
-      color: var(--text);
-      cursor: pointer;
-      transition: background var(--transition), transform var(--transition);
-      display: inline-flex; align-items: center; gap: 8px; justify-content: center;
-    }
-    .chip-btn:hover { background: #1b2030; transform: translateY(-1px); }
-    .chip-btn.is-fav { background: #17202b; border-color: #2a3645; }
-    .chip-btn .dot {
-      width: 8px; height: 8px; border-radius: 999px; background: var(--accent);
-    }
+/* Texto encima de la imagen */
+.card h3,
+.card span {
+    position: relative;
+    z-index: 1;
+}
 
-    /* Grid responsive */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
-    }
-    @media (max-width: 1200px) { .grid { grid-template-columns: repeat(5, 1fr); } }
-    @media (max-width: 992px) { .grid { grid-template-columns: repeat(4, 1fr); } }
-    @media (max-width: 780px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-    @media (max-width: 560px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+.card h3 {
+    font-size: 1em;
+    margin-bottom: 5px;
+}
 
-    /* Modal */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-      z-index: 2000;
-    }
-    .modal.open { display: flex; }
-    .modal-content {
-      width: min(900px, 96vw);
-      background: var(--card-soft);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-    .modal-header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 16px; border-bottom: 1px solid var(--border);
-    }
-    .modal-body {
-      display: grid; grid-template-columns: 280px 1fr;
-      gap: 18px; padding: 16px;
-    }
-    .modal-poster { aspect-ratio: 2/3; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
-    .modal-poster img { width: 100%; height: 100%; object-fit: cover; }
-    .modal-meta { color: var(--text-soft); display: flex; gap: 12px; margin-bottom: 8px; }
-    .stars {
-      display: inline-flex; gap: 2px; color: #f4d03f;
-      filter: drop-shadow(0 1px 0 rgba(0,0,0,0.3));
-    }
-    .close-btn {
-      width: 36px; height: 36px;
-      border-radius: 10px; border: 1px solid var(--border);
-      background: var(--card); color: var(--text);
-      display: grid; place-items: center; cursor: pointer;
-    }
-
-    /* Reveal anim */
-    .reveal {
-      opacity: 0; transform: translateY(10px);
-      transition: opacity 650ms ease, transform 650ms ease;
-    }
-    .reveal.show { opacity: 1; transform: translateY(0); }
-
-    footer {
-      margin: 32px 0 28px;
-      padding-top: 18px;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-  </style>
+.card span {
+    color: #e50914;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+</style>
 </head>
+
 <body>
-  <header role="banner" aria-label="Cabecera del sitio">
-    <div class="container nav">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"></div>
-        <div class="title">Mi blog de películas</div>
-      </div>
 
-      <form class="searchbar" role="search" aria-label="Buscar películas" onsubmit="event.preventDefault();">
-        <input id="searchInput" type="search" placeholder="Buscar por título, director o género..." aria-label="Buscar" />
-        <button type="button" class="btn" id="clearSearch" aria-label="Limpiar búsqueda">Limpiar</button>
-      </form>
+<header>
+    <h1>NETFLIX · Mis Películas</h1>
+</header>
 
-      <div class="actions">
-        <span class="chip" id="countInfo">0 películas</span>
-        <button class="toggle" id="themeToggle" aria-label="Cambiar tema">Tema: Rojo</button>
-      </div>
-    </div>
-  </header>
+<div class="section">
+    <h2>Películas</h2>
 
-  <main class="container" id="app" role="main">
-    <!-- Hero -->
-    <div class="hero" aria-label="Destacado">
-      <div class="hero-bg" aria-hidden="true"></div>
-      <div class="hero-content">
-        <div>
-          <h1>Favoritas y vistas: mi viaje de cine</h1>
-          <p>Un espacio personal para guardar lo que me hace vibrar. Portadas grandes, listas, y notas sobre cada película. Inspirado en plataformas modernas, pero con mi toque.</p>
-          <div class="hero-cta">
-            <button class="button-primary" id="scrollToFavorites">Ver mis favoritas</button>
-            <button class="button-secondary" id="scrollToRecent">Últimas vistas</button>
-          </div>
-        </div>
-        <div>
-          <div class="tags">
-            <span class="tag">Ciencia ficción</span>
-            <span class="tag">Drama</span>
-            <span class="tag">Animación</span>
-            <span class="tag">Thriller</span>
-            <span class="tag">Acción</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="grid">
 
-    <!-- Filtros -->
-    <section aria-label="Filtros">
-      <div class="section-header">
-        <h2>Filtrar y ordenar</h2>
-        <div class="controls">
-          <select id="genreFilter" aria-label="Filtrar por género">
-            <option value="">Todos los géneros</option>
-          </select>
-          <select id="sortSelect" aria-label="Ordenar">
-            <option value="title-asc">Título (A–Z)</option>
-            <option value="title-desc">Título (Z–A)</option>
-            <option value="year-desc">Año (nuevo → antiguo)</option>
-            <option value="year-asc">Año (antiguo → nuevo)</option>
-            <option value="rating-desc">Nota (alta → baja)</option>
-            <option value="rating-asc">Nota (baja → alta)</option>
-          </select>
-        </div>
-      </div>
-    </section>
-
-    <!-- Carrusel: últimas vistas -->
-    <section id="recent" aria-label="Últimas vistas">
-      <div class="section-header">
-        <h2>Últimas vistas</h2>
-        <div class="controls">
-          <button class="control-btn" data-scroll="recent" data-dir="-1" aria-label="Anterior">‹</button>
-          <button class="control-btn" data-scroll="recent" data-dir="1" aria-label="Siguiente">›</button>
-        </div>
-      </div>
-      <div class="carousel" id="recentCarousel" role="list" aria-label="Carrusel de últimas vistas"></div>
-    </section>
-
-    <!-- Grid: todas -->
-    <section aria-label="Todas las películas">
-      <div class="section-header">
-        <h2>Todas las películas</h2>
-        <div class="controls">
-          <button class="control-btn" id="resetFilters" aria-label="Quitar filtros">⟲</button>
-        </div>
-      </div>
-      <div class="grid reveal" id="grid"></div>
-    </section>
-
-    <!-- Favoritas -->
-    <section id="favorites" aria-label="Favoritas">
-      <div class="section-header">
-        <h2>Favoritas</h2>
-        <div class="controls">
-          <button class="control-btn" data-scroll="favorites" data-dir="-1" aria-label="Anterior">‹</button>
-          <button class="control-btn" data-scroll="favorites" data-dir="1" aria-label="Siguiente">›</button>
-        </div>
-      </div>
-      <div class="carousel" id="favoritesCarousel" role="list" aria-label="Carrusel de favoritas"></div>
-    </section>
-
-    <!-- Modal detalle -->
-    <div class="modal" id="modal" aria-hidden="true" role="dialog" aria-label="Detalles de la película">
-      <div class="modal-content">
-        <div class="modal-header">
-          <strong id="modalTitle">Título</strong>
-          <button class="close-btn" id="closeModal" aria-label="Cerrar">✕</button>
-        </div>
-        <div class="modal-body">
-          <div class="modal-poster"><img id="modalPoster" alt="Poster" /></div>
-          <div>
-            <div class="modal-meta">
-              <span id="modalYear">Año</span> •
-              <span id="modalGenres">Géneros</span> •
-              <span id="modalRuntime">Duración</span>
+        <a href="padrino.html">
+            <div class="card" style="background-image: url('imagenes/padrino.jpg');">
+                <h3>El Padrino</h3>
+                <span>★★★★★</span>
             </div>
-            <div class="stars" id="modalStars" aria-label="Valoración"></div>
-            <p id="modalOverview">Sinopsis.</p>
-            <div class="tags" id="modalTags"></div>
-            <div class="actions-row" style="margin-top:12px;">
-              <button class="chip-btn" id="modalFavBtn"><span class="dot"></span> Añadir a favoritas</button>
-              <button class="chip-btn" id="modalWatchBtn">+ Lista de pendientes</button>
+        </a>
+
+        <a href="interstellar.html">
+            <div class="card" style="background-image: url('imagenes/interstellar.jpg');">
+                <h3>Interstellar</h3>
+                <span>★★★★☆</span>
             </div>
-          </div>
-        </div>
-      </div>
+        </a>
+
+        <a href="matrix.html">
+            <div class="card" style="background-image: url('imagenes/matrix.jpg');">
+                <h3>Matrix</h3>
+                <span>★★★★★</span>
+            </div>
+        </a>
+
+        <a href="inception.html">
+            <div class="card" style="background-image: url('imagenes/inception.jpg');">
+                <h3>Inception</h3>
+                <span>★★★★☆</span>
+            </div>
+        </a>
+
+        <a href="joker.html">
+            <div class="card" style="background-image: url('imagenes/joker.jpg');">
+                <h3>Joker</h3>
+                <span>★★★★☆</span>
+            </div>
+        </a>
+
     </div>
+</div>
 
-  </main>
-
-  <footer class="container" role="contentinfo">
-    © 2025 • Este es mi espacio personal de cine. Sustituye las imágenes por tus posters y escribe tus notas.
-  </footer>
-
-  <script>
-    // Datos de ejemplo: cambia 'poster' por la URL de tu imagen (usa tus propios posters).
-    const MOVIES = [
-      {
-        id: 'inception',
-        title: 'Inception',
-        year: 2010,
-        genres: ['Ciencia ficción', 'Acción'],
-        rating: 8.8,
-        runtime: 148,
-        recent: true,
-        overview: 'Un ladrón que roba secretos a través del uso de la tecnología de sueños recibe una misión casi imposible: plantar una idea en la mente de alguien.',
-        poster: 'https://picsum.photos/seed/inception/400/600',
-        tags: ['Sueños', 'Heist', 'Nolan']
-      },
-      {
-        id: 'interstellar',
-        title: 'Interstellar',
-        year: 2014,
-        genres: ['Ciencia ficción', 'Drama'],
-        rating: 8.6,
-        runtime: 169,
-        recent: true,
-        overview: 'Un grupo de exploradores viaja a través de un agujero de gusano para asegurar el futuro de la humanidad.',
-        poster: 'https://picsum.photos/seed/interstellar/400/600',
-        tags: ['Espacio', 'Familia', 'Nolan']
-      },
-      {
-        id: 'grand-budapest',
-        title: 'The Grand Budapest Hotel',
-        year: 2014,
-        genres: ['Comedia', 'Drama'],
-        rating: 8.1,
-        runtime: 99,
-        recent: false,
-        overview: 'Las aventuras de Gustave H., un legendario conserje, y Zero, el lobby boy que se convierte en su amigo de confianza.',
-        poster: 'https://picsum.photos/seed/budapest/400/600',
-        tags: ['Wes Anderson', 'Estética', 'Simetría']
-      },
-      {
-        id: 'fight-club',
-        title: 'Fight Club',
-        year: 1999,
-        genres: ['Drama', 'Thriller'],
-        rating: 8.8,
-        runtime: 139,
-        recent: true,
-        overview: 'Un oficinista insomne y un vendedor de jabón forman un club de lucha subterráneo que evoluciona a algo más.',
-        poster: 'https://picsum.photos/seed/fightclub/400/600',
-        tags: ['Psicología', 'Crítica social', 'Fincher']
-      },
-      {
-        id: 'spirited-away',
-        title: 'El viaje de Chihiro',
-        year: 2001,
-        genres: ['Animación', 'Fantasía'],
-        rating: 8.6,
-        runtime: 125,
-        recent: false,
-        overview: 'Una niña se adentra en un mundo mágico de dioses y espíritus y debe encontrar la forma de salvar a sus padres.',
-        poster: 'https://picsum.photos/seed/chihiro/400/600',
-        tags: ['Studio Ghibli', 'Miyazaki', 'Onírico']
-      },
-      {
-        id: 'parasite',
-        title: 'Parásitos',
-        year: 2019,
-        genres: ['Drama', 'Thriller'],
-        rating: 8.6,
-        runtime: 132,
-        recent: true,
-        overview: 'Dos familias entrelazan sus destinos en una historia de clase, engaño y tensión creciente.',
-        poster: 'https://picsum.photos/seed/parasite/400/600',
-        tags: ['Bong Joon-ho', 'Clase social', 'Oscura']
-      },
-      {
-        id: 'matrix',
-        title: 'The Matrix',
-        year: 1999,
-        genres: ['Ciencia ficción', 'Acción'],
-        rating: 8.7,
-        runtime: 136,
-        recent: false,
-        overview: 'Un hacker descubre la verdad sobre su realidad y se une a la rebelión contra las máquinas.',
-        poster: 'https://picsum.photos/seed/matrix/400/600',
-        tags: ['Cyberpunk', 'Bullet time', 'Wachowski']
-      },
-      {
-        id: 'lalaland',
-        title: 'La La Land',
-        year: 2016,
-        genres: ['Romance', 'Musical'],
-        rating: 8.0,
-        runtime: 128,
-        recent: false,
-        overview: 'Una actriz y un pianista persiguen sus sueños en Los Ángeles en una historia de amor y ambición.',
-        poster: 'https://picsum.photos/seed/lalaland/400/600',
-        tags: ['Color', 'Jazz', 'Chazelle']
-      },
-      {
-        id: 'madmax',
-        title: 'Mad Max: Fury Road',
-        year: 2015,
-        genres: ['Acción', 'Aventura'],
-        rating: 8.1,
-        runtime: 120,
-        recent: true,
-        overview: 'En un desierto postapocalíptico, Max y Furiosa huyen de un tirano en una persecución explosiva.',
-        poster: 'https://picsum.photos/seed/madmax/400/600',
-        tags: ['Practical FX', 'Velocidad', 'Miller']
-      },
-      {
-        id: 'godfather',
-        title: 'El padrino',
-        year: 1972,
-        genres: ['Crimen', 'Drama'],
-        rating: 9.2,
-        runtime: 175,
-        recent: false,
-        overview: 'La historia de la familia Corleone y el legado del poder, la lealtad y la traición.',
-        poster: 'https://picsum.photos/seed/godfather/400/600',
-        tags: ['Clásico', 'Mafia', 'Coppola']
-      }
-    ];
-
-    // Estado
-    const state = {
-      query: '',
-      genre: '',
-      sort: 'title-asc',
-      favorites: new Set(JSON.parse(localStorage.getItem('favorites') || '[]')),
-      watchlist: new Set(JSON.parse(localStorage.getItem('watchlist') || '[]')),
-      theme: localStorage.getItem('theme') || 'red'
-    };
-
-    // Utilidades
-    const qs = (sel, ctx = document) => ctx.querySelector(sel);
-    const qsa = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-    const clamp = (min, v, max) => Math.max(min, Math.min(v, max));
-    const formatRuntime = min => `${min} min`;
-    const starIcons = rating => {
-      const stars = Math.round(rating) / 2; // sobre 5
-      let out = '';
-      for (let i = 1; i <= 5; i++) out += i <= stars ? '★' : '☆';
-      return out;
-    };
-
-    // Render tarjeta
-    function renderCard(movie) {
-      const isFav = state.favorites.has(movie.id);
-      const isWatch = state.watchlist.has(movie.id);
-      const card = document.createElement('article');
-      card.className = 'card';
-      card.setAttribute('role', 'listitem');
-      card.innerHTML = `
-        <div class="poster">
-          <img loading="lazy" src="${movie.poster}" alt="Poster de ${movie.title}" />
-          <span class="rating-badge">${movie.rating.toFixed(1)}</span>
-        </div>
-        <div class="content">
-          <div class="title">${movie.title}</div>
-          <div class="meta">
-            <span>${movie.year}</span>
-            <span>•</span>
-            <span>${movie.genres.join(', ')}</span>
-          </div>
-          <div class="tags">
-            ${movie.tags.map(t => `<span class="tag">${t}</span>`).join('')}
-          </div>
-          <div class="actions-row">
-            <button class="chip-btn ${isFav ? 'is-fav' : ''}" data-action="fav" data-id="${movie.id}">
-              <span class="dot"></span>${isFav ? 'En favoritas' : 'Añadir a favoritas'}
-            </button>
-            <button class="chip-btn" data-action="detail" data-id="${movie.id}">Detalles</button>
-          </div>
-        </div>
-      `;
-      return card;
-    }
-
-    // Render carrusel
-    function renderCarousel(containerId, items) {
-      const el = qs('#' + containerId);
-      el.innerHTML = '';
-      items.forEach(m => el.appendChild(renderCard(m)));
-    }
-
-    // Render grid
-    function renderGrid(items) {
-      const grid = qs('#grid');
-      grid.innerHTML = '';
-      items.forEach(m => grid.appendChild(renderCard(m)));
-    }
-
-    // Filtros + orden
-    function applyFilters() {
-      const query = state.query.trim().toLowerCase();
-      const genre = state.genre;
-      let res = MOVIES.filter(m => {
-        const q = !query ||
-          m.title.toLowerCase().includes(query) ||
-          m.genres.some(g => g.toLowerCase().includes(query)) ||
-          (m.overview && m.overview.toLowerCase().includes(query)) ||
-          (m.tags && m.tags.some(t => t.toLowerCase().includes(query)));
-        const g = !genre || m.genres.includes(genre);
-        return q && g;
-      });
-
-      switch (state.sort) {
-        case 'title-asc': res.sort((a,b)=>a.title.localeCompare(b.title)); break;
-        case 'title-desc': res.sort((a,b)=>b.title.localeCompare(a.title)); break;
-        case 'year-desc': res.sort((a,b)=>b.year - a.year); break;
-        case 'year-asc': res.sort((a,b)=>a.year - b.year); break;
-        case 'rating-desc': res.sort((a,b)=>b.rating - a.rating); break;
-        case 'rating-asc': res.sort((a,b)=>a.rating - b.rating); break;
-      }
-
-      qs('#countInfo').textContent = `${res.length} películas`;
-      renderGrid(res);
-      // reveal anim
-      setTimeout(()=>qs('#grid').classList.add('show'), 20);
-    }
-
-    // Inicializar géneros
-    function initGenres() {
-      const genres = new Set();
-      MOVIES.forEach(m => m.genres.forEach(g => genres.add(g)));
-      const sel = qs('#genreFilter');
-      genres.forEach(g => {
-        const opt = document.createElement('option');
-        opt.value = g; opt.textContent = g;
-        sel.appendChild(opt);
-      });
-    }
-
-    // Modal
-    function openModal(movie) {
-      qs('#modalTitle').textContent = movie.title;
-      qs('#modalPoster').src = movie.poster;
-      qs('#modalPoster').alt = `Poster de ${movie.title}`;
-      qs('#modalYear').textContent = movie.year;
-      qs('#modalGenres').textContent = movie.genres.join(', ');
-      qs('#modalRuntime').textContent = formatRuntime(movie.runtime);
-      qs('#modalOverview').textContent = movie.overview;
-      qs('#modalTags').innerHTML = movie.tags.map(t=>`<span class="tag">${t}</span>`).join('');
-      const stars = starIcons(movie.rating);
-      qs('#modalStars').textContent = stars;
-      const favBtn = qs('#modalFavBtn');
-      favBtn.dataset.id = movie.id;
-      favBtn.textContent = state.favorites.has(movie.id) ? 'En favoritas' : 'Añadir a favoritas';
-      const watchBtn = qs('#modalWatchBtn');
-      watchBtn.dataset.id = movie.id;
-      qs('#modal').classList.add('open');
-      qs('#modal').setAttribute('aria-hidden', 'false');
-    }
-    function closeModal() {
-      qs('#modal').classList.remove('open');
-      qs('#modal').setAttribute('aria-hidden', 'true');
-    }
-
-    // Favoritos / Watchlist
-    function toggleFavorite(id) {
-      if (state.favorites.has(id)) state.favorites.delete(id);
-      else state.favorites.add(id);
-      localStorage.setItem('favorites', JSON.stringify(Array.from(state.favorites)));
-      refreshFavoritesCarousel();
-      applyFilters();
-    }
-    function toggleWatch(id) {
-      if (state.watchlist.has(id)) state.watchlist.delete(id);
-      else state.watchlist.add(id);
-      localStorage.setItem('watchlist', JSON.stringify(Array.from(state.watchlist)));
-    }
-    function refreshFavoritesCarousel() {
-      const favs = MOVIES.filter(m => state.favorites.has(m.id));
-      renderCarousel('favoritesCarousel', favs);
-    }
-
-    // Carrusel controls
-    function scrollCarousel(id, dir) {
-      const el = qs('#' + id);
-      const delta = dir * 200;
-      el.scrollBy({ left: delta, behavior: 'smooth' });
-    }
-
-    // Tema
-    function applyTheme() {
-      if (state.theme === 'blue') {
-        document.documentElement.setAttribute('data-theme', 'blue');
-        qs('#themeToggle').textContent = 'Tema: Azul';
-      } else {
-        document.documentElement.removeAttribute('data-theme');
-        qs('#themeToggle').textContent = 'Tema: Rojo';
-      }
-      localStorage.setItem('theme', state.theme);
-    }
-
-    // Intersection reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) e.target.classList.add('show');
-      });
-    }, { threshold: 0.1 });
-
-    // Eventos
-    function bindEvents() {
-      // búsqueda
-      qs('#searchInput').addEventListener('input', (e) => {
-        state.query = e.target.value;
-        applyFilters();
-      });
-      qs('#clearSearch').addEventListener('click', () => {
-        state.query = '';
-        qs('#searchInput').value = '';
-        applyFilters();
-      });
-
-      // filtros
-      qs('#genreFilter').addEventListener('change', (e) => {
-        state.genre = e.target.value;
-        applyFilters();
-      });
-      qs('#sortSelect').addEventListener('change', (e) => {
-        state.sort = e.target.value;
-        applyFilters();
-      });
-      qs('#resetFilters').addEventListener('click', () => {
-        state.query = '';
-        state.genre = '';
-        state.sort = 'title-asc';
-        qs('#searchInput')..value = '';
-        qs('#genreFilter').value = '';
-        qs('#sortSelect').value = 'title-asc';
-        applyFilters();
-      });
-
-      // tema
-      qs('#themeToggle').addEventListener('click', () => {
-        state.theme = state.theme === 'red' ? 'blue' : 'red';
-        applyTheme();
-      });
-
-      // carruseles
-      qsa('[data-scroll]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const target = btn.getAttribute('data-scroll');
-          const dir = parseInt(btn.getAttribute('data-dir'), 10);
-          const id = target === 'recent' ? 'recentCarousel' : 'favoritesCarousel';
-          scrollCarousel(id, dir);
-        });
-      });
-
-      // scroll hero ctas
-      qs('#scrollToFavorites').addEventListener('click', () => {
-        qs('#favorites').scrollIntoView({ behavior: 'smooth' });
-      });
-      qs('#scrollToRecent').addEventListener('click', () => {
-        qs('#recent').scrollIntoView({ behavior: 'smooth' });
-      });
-
-      // delegación acciones en tarjetas
-      document.body.addEventListener('click', (e) => {
-        const btn = e.target.closest('.chip-btn');
-        if (!btn) return;
-        const id = btn.getAttribute('data-id');
-        const action = btn.getAttribute('data-action');
-        if (action === 'fav') {
-          toggleFavorite(id);
-        } else if (action === 'detail') {
-          const movie = MOVIES.find(m => m.id === id);
-          if (movie) openModal(movie);
-        }
-      });
-
-      // modal
-      qs('#closeModal').addEventListener('click', closeModal);
-      qs('#modal').addEventListener('click', (e) => {
-        if (e.target.id === 'modal') closeModal();
-      });
-      qs('#modalFavBtn').addEventListener('click', (e) => {
-        const id = e.target.dataset.id;
-        toggleFavorite(id);
-        e.target.textContent = state.favorites.has(id) ? 'En favoritas' : 'Añadir a favoritas';
-      });
-      qs('#modalWatchBtn').addEventListener('click', (e) => {
-        const id = e.target.dataset.id;
-        toggleWatch(id);
-        e.target.textContent = state.watchlist.has(id) ? 'En pendientes' : '+ Lista de pendientes';
-      });
-
-      // observer
-      observer.observe(qs('#grid'));
-    }
-
-    // Render inicial
-    function init() {
-      // recientes
-      const recent = MOVIES.filter(m => m.recent);
-      renderCarousel('recentCarousel', recent);
-
-      // favoritas
-      refreshFavoritesCarousel();
-
-      // géneros
-      initGenres();
-
-      // tema actual
-      applyTheme();
-
-      // pintar grid
-      applyFilters();
-
-      // eventos
-      bindEvents();
-    }
-
-    document.addEventListener('DOMContentLoaded', init);
-  </script>
 </body>
 </html>
 
