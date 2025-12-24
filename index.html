@@ -1,200 +1,241 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Mis Películas</title>
+    <meta charset="UTF-8">
+    <title>El Rincón del Tito Alex</title>
 
-<!-- FUENTE -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <!-- FUENTE -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    font-family: "Playfair Display", serif;
-    background-color: #141414;
-    color: white;
-}
+        body {
+            font-family: "Playfair Display", serif;
+            background-color: #141414;
+            color: white;
+        }
 
-header {
-    padding: 20px 40px;
-    background-color: #141414;
-    border-bottom: 2px solid #e50914;
-}
+        header {
+            padding: 20px 40px;
+            background-color: #141414;
+            border-bottom: 2px solid #e50914;
+        }
 
-header h1 {
-    color: #e50914;
-    font-size: 2em;
-}
+        header h1 {
+            color: #e50914;
+            font-size: 2em;
+        }
 
-.section {
-    padding: 30px 40px;
-}
+        .section {
+            padding: 30px 40px;
+        }
 
-.section h2 {
-    margin-bottom: 20px;
-}
+        .section h2 {
+            margin-bottom: 20px;
+        }
 
-/* GRID PELÍCULAS */
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-}
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
 
-a {
-    text-decoration: none;
-    color: white;
-}
+        a {
+            text-decoration: none;
+            color: white;
+        }
 
-/* TARJETAS */
-.card {
-    height: 260px;
-    border-radius: 8px;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    cursor: pointer;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s;
-}
+        /* TARJETAS */
+        .card {
+            height: 260px;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
 
-.card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.85),
-        rgba(0,0,0,0.2)
-    );
-}
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(0,0,0,0.85),
+                rgba(0,0,0,0.2)
+            );
+        }
 
-.card:hover {
-    transform: scale(1.08);
-}
+        .card:hover {
+            transform: scale(1.08);
+        }
 
-.card h3,
-.card span {
-    position: relative;
-    z-index: 1;
-}
+        .card h3,
+        .card span {
+            position: relative;
+            z-index: 1;
+        }
 
-.card span {
-    color: #e50914;
-    font-weight: bold;
-}
+        .card h3 {
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
 
-/* FORMULARIO OPINIONES */
-.opiniones {
-    max-width: 600px;
-    margin: 60px auto;
-}
+        .card span {
+            color: #e50914;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
 
-.opiniones h2 {
-    color: #e50914;
-    margin-bottom: 20px;
-}
+        /* FORMULARIO OPINIONES */
+        .opiniones {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 30px;
+            background-color: #1f1f1f;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+        }
 
-.opiniones input,
-.opiniones textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: none;
-    font-family: inherit;
-}
+        .opiniones h2 {
+            color: #e50914;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-.opiniones textarea {
-    resize: vertical;
-    min-height: 120px;
-}
+        .opiniones label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            opacity: 0.85;
+        }
 
-.opiniones button {
-    background-color: #e50914;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-}
+        .opiniones input,
+        .opiniones textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: none;
+            font-family: inherit;
+            background-color: #2a2a2a;
+            color: white;
+        }
 
-.opiniones button:hover {
-    background-color: #b20710;
-}
-</style>
+        .opiniones textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .opiniones input:focus,
+        .opiniones textarea:focus {
+            outline: 2px solid #e50914;
+        }
+
+        .opiniones button {
+            width: 100%;
+            background-color: #e50914;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .opiniones button:hover {
+            background-color: #b20710;
+        }
+    </style>
 </head>
 
 <body>
 
 <header>
-    <h1>NETFLIX · Mis Películas</h1>
+    <h1>El Rincón del Tito Alex</h1>
 </header>
 
+<!-- PELÍCULAS Y SERIES -->
 <div class="section">
-    <h2>Películas</h2>
+    <h3>2025</h3>
+    <h2>Películas y series</h2>
 
     <div class="grid">
-        <a href="padrino.html">
-            <div class="card" style="background-image: url('imagenes/padrino.jpg');">
-                <h3>El Padrino</h3>
-                <span>★★★★★</span>
-            </div>
-        </a>
-
-        <a href="interstellar.html">
-            <div class="card" style="background-image: url('imagenes/interstellar.jpg');">
-                <h3>Interstellar</h3>
-                <span>★★★★☆</span>
-            </div>
-        </a>
-
-        <a href="matrix.html">
-            <div class="card" style="background-image: url('imagenes/matrix.jpg');">
-                <h3>Matrix</h3>
-                <span>★★★★★</span>
-            </div>
-        </a>
-
-        <a href="inception.html">
-            <div class="card" style="background-image: url('imagenes/inception.jpg');">
-                <h3>Inception</h3>
-                <span>★★★★☆</span>
-            </div>
-        </a>
-
-        <a href="joker.html">
-            <div class="card" style="background-image: url('imagenes/joker.jpg');">
-                <h3>Joker</h3>
-                <span>★★★★☆</span>
-            </div>
-        </a>
+        <a href="suits.html"><div class="card" style="background-image:url('imagenes/suits.jpg')"><h3>Suits</h3><span>★★★★★</span></div></a>
+        <a href="interstellar.html"><div class="card" style="background-image:url('imagenes/interestellar.jpg')"><h3>Interstellar</h3><span>★★★★☆</span></div></a>
+        <a href="juegosdelhambre.html"><div class="card" style="background-image:url('imagenes/juegosdelhambre.jpg')"><h3>Los juegos del hambre</h3><span>★★★★★</span></div></a>
+        <a href="coachcarter.html"><div class="card" style="background-image:url('imagenes/coachcarter.jpg')"><h3>Coach Carter</h3><span>★★★★☆</span></div></a>
+        <a href="tragonesmazmorras.html"><div class="card" style="background-image:url('imagenes/tragonesmazmorras.jpg')"><h3>Tragones y mazmorras</h3><span>★★★★☆</span></div></a>
+        <a href="cienañosdesoledad.html"><div class="card" style="background-image:url('imagenes/cienañosdesoledad.jpg')"><h3>Cien años de soledad</h3><span>★★★★☆</span></div></a>
+        <a href="dexter.html"><div class="card" style="background-image:url('imagenes/dexter.jpg')"><h3>Dexter</h3><span>★★★★☆</span></div></a>
+        <a href="hsm.html"><div class="card" style="background-image:url('imagenes/hsm.jpg')"><h3>High School Musical</h3><span>★★★★☆</span></div></a>
     </div>
 </div>
 
-<!-- SECCIÓN OPINIONES -->
-<section class="opiniones">
-    <h2>Deja tu opinión</h2>
+<!-- VIDEOJUEGOS -->
+<div class="section">
+    <h2>Videojuegos</h2>
 
-    <form action="https://formspree.io/f/xojazvlz" method="POST">
-        <input type="text" name="nombre" placeholder="Tu nombre" required>
-        <input type="email" name="email" placeholder="Tu email" required>
-        <textarea name="mensaje" placeholder="Escribe tu opinión..." required></textarea>
-        <button type="submit">Enviar opinión</button>
+    <div class="grid">
+        <a href="deathstranding.html"><div class="card" style="background-image:url('imagenes/deathstranding.jpg')"><h3>Death Stranding</h3><span>★★★★★</span></div></a>
+        <a href="hades.html"><div class="card" style="background-image:url('imagenes/hades.jpg')"><h3>Hades</h3><span>★★★★☆</span></div></a>
+        <a href="ghostwiretokyo.html"><div class="card" style="background-image:url('imagenes/ghostwiretokyo.jpg')"><h3>Ghostwire: Tokyo</h3><span>★★★★☆</span></div></a>
+        <a href="expedition33.html"><div class="card" style="background-image:url('imagenes/expedition33.jpg')"><h3>Clair Obscur: Expedition 33</h3><span>★★★★★</span></div></a>
+        <a href="firewatch.html"><div class="card" style="background-image:url('imagenes/firewatch.jpg')"><h3>Firewatch</h3><span>★★★★☆</span></div></a>
+        <a href="outlast.html"><div class="card" style="background-image:url('imagenes/outlast.jpg')"><h3>Outlast</h3><span>★★★★☆</span></div></a>
+        <a href="re7.html"><div class="card" style="background-image:url('imagenes/re7.jpg')"><h3>Resident Evil 7</h3><span>★★★★★</span></div></a>
+        <a href="swd.html"><div class="card" style="background-image:url('imagenes/swd.jpg')"><h3>Still Wakes the Deep</h3><span>★★★★★</span></div></a>
+        <a href="doomda.html"><div class="card" style="background-image:url('imagenes/doomda.jpg')"><h3>Doom: Dark Ages</h3><span>★★★★★</span></div></a>
+        <a href="policestories.html"><div class="card" style="background-image:url('imagenes/policestories.jpg')"><h3>Police Stories</h3><span>★★★★★</span></div></a>
+        <a href="re4.html"><div class="card" style="background-image:url('imagenes/re4.jpg')"><h3>Resident Evil 4 Remake</h3><span>★★★★★</span></div></a>
+    </div>
+</div>
+
+<!-- LIBROS -->
+<div class="section">
+    <h2>Libros</h2>
+
+    <div class="grid">
+        <a href="rebelionenlagranja.html"><div class="card" style="background-image:url('imagenes/rebelionenlagranja.jpg')"><h3>Rebelión en la granja - George Orwell</h3><span>★★★★★</span></div></a>
+        <a href="nunca.html"><div class="card" style="background-image:url('imagenes/nunca.jpg')"><h3>Nunca - Ken Follett</h3><span>★★★★☆</span></div></a>
+        <a href="grietadelsilencio.html"><div class="card" style="background-image:url('imagenes/grietadelsilencio.jpg')"><h3>La grieta del silencio - Javier Castillo</h3><span>★★★★★</span></div></a>
+        <a href="lagaviota.html"><div class="card" style="background-image:url('imagenes/lagaviota.jpg')"><h3>La gaviota - Antón P. Chéjov</h3><span>★★★★☆</span></div></a>
+        <a href="ultimosdiasberlin.html"><div class="card" style="background-image:url('imagenes/ultimosdiasberlin.jpg')"><h3>Últimos días en Berlín - Paloma Sánchez Garnica</h3><span>★★★★☆</span></div></a>
+    </div>
+</div>
+
+<!-- OPINIONES -->
+<section class="opiniones">
+    <h2>Cuéntame tu vida</h2>
+
+    <form action="https://formspree.io/f/mojazyry" method="POST">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Tu email" required>
+
+        <label for="mensaje">Mensaje</label>
+        <textarea id="mensaje" name="mensaje" placeholder="Escribe tu opinión..." required></textarea>
+
+        <button type="submit">Enviar</button>
     </form>
 </section>
 
 </body>
 </html>
+
