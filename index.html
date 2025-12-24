@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <title>Mis Películas</title>
 
+<!-- FUENTE -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
 <style>
 * {
     margin: 0;
@@ -16,7 +21,6 @@ body {
     background-color: #141414;
     color: white;
 }
-
 
 header {
     padding: 20px 40px;
@@ -37,6 +41,7 @@ header h1 {
     margin-bottom: 20px;
 }
 
+/* GRID PELÍCULAS */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -64,7 +69,6 @@ a {
     transition: transform 0.3s;
 }
 
-/* Oscurecer imagen */
 .card::before {
     content: "";
     position: absolute;
@@ -80,22 +84,55 @@ a {
     transform: scale(1.08);
 }
 
-/* Texto encima de la imagen */
 .card h3,
 .card span {
     position: relative;
     z-index: 1;
 }
 
-.card h3 {
-    font-size: 1em;
-    margin-bottom: 5px;
-}
-
 .card span {
     color: #e50914;
-    font-size: 0.9em;
     font-weight: bold;
+}
+
+/* FORMULARIO OPINIONES */
+.opiniones {
+    max-width: 600px;
+    margin: 60px auto;
+}
+
+.opiniones h2 {
+    color: #e50914;
+    margin-bottom: 20px;
+}
+
+.opiniones input,
+.opiniones textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: none;
+    font-family: inherit;
+}
+
+.opiniones textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.opiniones button {
+    background-color: #e50914;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.opiniones button:hover {
+    background-color: #b20710;
 }
 </style>
 </head>
@@ -110,7 +147,6 @@ a {
     <h2>Películas</h2>
 
     <div class="grid">
-
         <a href="padrino.html">
             <div class="card" style="background-image: url('imagenes/padrino.jpg');">
                 <h3>El Padrino</h3>
@@ -145,11 +181,20 @@ a {
                 <span>★★★★☆</span>
             </div>
         </a>
-
     </div>
 </div>
 
+<!-- SECCIÓN OPINIONES -->
+<section class="opiniones">
+    <h2>Deja tu opinión</h2>
+
+    <form action="https://formspree.io/f/xojazvlz" method="POST">
+        <input type="text" name="nombre" placeholder="Tu nombre" required>
+        <input type="email" name="email" placeholder="Tu email" required>
+        <textarea name="mensaje" placeholder="Escribe tu opinión..." required></textarea>
+        <button type="submit">Enviar opinión</button>
+    </form>
+</section>
+
 </body>
 </html>
-
-
